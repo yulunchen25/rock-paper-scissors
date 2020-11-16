@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Paper Scissors</title>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<h1>Rock Paper Scissors</h1>
+	<p>Play up to 5 rounds of Rock Paper Scissor, please choose below:</p>
+	<button id="rock">Rock</button>
+	<button id="paper">Paper</button>
+	<button id="scissors">Scissors</button><br>
+	<br>
+	<button id="replay">Replay</button>
+	<div id='results'>
+		<h2>Results</h2>
+		<h3>Player: 0 vs Computer: 0
+		</h3>
+	</div>
+	
+	<script>
+	// Simulates the computer's choice, randomly selects rock, paper or scissors
+	function computerPlay() {
+		let random = Math.floor(Math.random() * 3)
+		if (random === 1) {
+			return 'rock';
+		} else if (random === 2) {
+			return 'paper';
+		} else {
+			return 'scissors';
+		}
+	}
+
+	// Counts the number of times the player or computer has won
+	let playerWin = 0;
+	let computerWin = 0;
+	let tie = 0;
+	
+	// Plays a single round of Rock Paper Scissors, keeps track of wins, displays the winner of each round and checks if 5 rounds have been played
+	function rockPaperScissors(playerSelection,computerSelection) {
+		switch (true) { // Compares all possible cases and displays the winner of the round
+			case playerSelection === 'rock' && computerSelection == 'rock':
+			case playerSelection === 'paper' && computerSelection == 'paper':
+			case playerSelection === 'scissors' && computerSelection == 'scissors':
+				tie += 1
+				const p = document.createElement('p');
+				p.textContent = 'Tie!';
+				result.appendChild(p);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'rock' && computerSelection == 'scissors':
+				playerWin += 1;
+				const p1 = document.createElement('p');
+				p1.textContent = 'You win! Rock beats Scissors!';
+				result.appendChild(p1);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'rock' && computerSelection == 'paper':
+				computerWin += 1;
+				const p2 = document.createElement('p');
+				p2.textContent = 'You lose! Paper beats Rock!';
+				result.appendChild(p2);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'paper' && computerSelection == 'rock':
+				playerWin += 1;
+				const p3 = document.createElement('p');
+				p3.textContent = 'You win! Paper beats Rock!';
+				result.appendChild(p3);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'paper' && computerSelection == 'scissors':
+				computerWin += 1;
+				const p4 = document.createElement('p');
+				p4.textContent = 'You lose! Scissors beats Paper!';
+				result.appendChild(p4);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'scissors' && computerSelection == 'rock':
+				computerWin += 1;
+				const p5 = document.createElement('p');
+				p5.textContent = 'You lose! Rock beats Scissors!';
+				result.appendChild(p5);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+			case playerSelection === 'scissors' && computerSelection == 'paper':
+				playerWin += 1;
+				const p6 = document.createElement('p');
+				p6.textContent = 'You win! Scissors beats Paper!';
+				result.appendChild(p6);
+				h3.textContent = `Player: ${playerWin} vs Computer: ${computerWin}`;
+				break;
+		}
+		// If the number of rounds reaches 5, displays the overall winner and removes the selection buttons
+		if (playerWin + computerWin + tie === 5) {
+			if (playerWin > computerWin) {
+				const h4 = document.createElement('h4');
+				h4.textContent = `Player wins! ${playerWin} vs ${computerWin}`;
+				result.appendChild(h4);
+			} else if (computerWin > playerWin) {
+				const h4 = document.createElement('h4');
+				h4.textContent = `Computer wins! ${computerWin} vs ${playerWin}`;
+				result.appendChild(h4);
+			} else {
+				const h4 = document.createElement('h4');
+				h4.textContent = `Tie! ${playerWin} vs ${computerWin}`;
+				result.appendChild(h4);
+			}
+			rock.remove();
+			paper.remove();
+			scissors.remove();
+		}
+	}
+
+	// Plays Rock Paper Scissors up to 5 rounds through buttons with a replay button to reset
+	const result = document.querySelector('#results')
+	const h3 = document.querySelector('h3')
+
+	const rock = document.querySelector('#rock');
+	rock.addEventListener('click', () => rockPaperScissors('rock', computerPlay()));
+
+	const paper = document.querySelector('#paper');
+	paper.addEventListener('click', () => rockPaperScissors('paper', computerPlay()));
+		
+	const scissors = document.querySelector('#scissors');
+	scissors.addEventListener('click', () => rockPaperScissors('scissors', computerPlay()));
+
+	const replay = document.querySelector('#replay');
+	replay.addEventListener('click', () => location.reload())
+	</script>
+</body>
+</html>
